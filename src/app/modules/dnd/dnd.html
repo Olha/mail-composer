@@ -1,0 +1,113 @@
+<div class="wrapper-dnd" ng-controller="DNDController">
+    <div class="box-input newsletter-input">
+        <input type="text" class="mail-title" ng-class="{'incorrect': !!errorPost.title}" name="name" ng-model="postSubject" placeholder="{{ 'enter_newsletter_subject' | translate}}">
+    </div>
+    <div class="manage-dashboard">
+        <div class="dropdown dropdown-projects dropdown-template" dropdown-custom>
+            <div class="dropdown-title">
+                <span class="dropdown-link" type="button" dropdown-toggle>
+                    {{dashboard.name}} <span class="arrow-white-bottom"></span>
+                </span>
+            </div>
+            <div class="dropdown-content">
+                <ul class="dropdown-list" role="menu">
+                    <li ng-hide="key === '0'" ng-repeat="(key, dashboard) in models.dropzones"><a ng-click="changeDashboard(key, dashboard.id)">{{dashboard.name}}</a></li>
+                </ul>
+                <ul class="dropdown-list" role="menu" ng-show="checkActiveDropzone()">
+                    <li ng-repeat="(key, dashboard) in models.projectDropzones"><a ng-click="changeDashboard(key, dashboard.id, 'project')">{{dashboard.name}}</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="simple-btn">
+            <button class="box_btn_publish btn_login btn_publish" type="button" ng-click="showPreviewNewsletter()">
+                Preview
+            </button>
+        </div>
+        <div>
+            <button class="box_btn_publish btn_login btn_publish" type="button" clean-dropzone-widgets ng-click="cleanWidget(dashboard.widgets)">
+                Clear
+            </button>
+        </div>
+        <div>
+            <button class="box_btn_publish btn_login btn_publish" type="button" remove-dropzone ng-click="removeDropzone()">
+                Remove
+            </button>
+        </div>
+        <div class="template-btn simple-btn">
+            <button class="box_btn_publish btn_login btn_publish box-save-template" type="button" save-dropzone ng-click="saveDropzone(dashboard.widgets)">
+                <img class="ic-save-template" alt="" src="/img/layout/dnd/default_mail_template.svg">
+                Save Template
+            </button>
+        </div>
+        <div class="dropdown dropdown-projects dropdown-template dropdown-template-down" dropdown-custom simditor-select-template>
+            <div class="dropdown-title" type="button" dropdown-toggle>
+                    <span class="dropdown-link ng-binding active" type="button"
+                          dropdown-toggle="">
+                    {{ currentTpl.name}} <span class="arrow-white-bottom"></span>
+                </span>
+
+            </div>
+            <div class="dropdown-content">
+                <ul class="dropdown-list" role="menu">
+                    <li ng-repeat="item in listTemplate"
+                        ng-click="chooseProperty(item)"><a>{{item.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="template-btn">
+            <button class="box_btn_publish btn_login btn_publish" type="button" delete-dropzone
+                    ng-show="checkTypeTemplate()"
+                    ng-click="deleteDropzone(dashboard.id)">
+                Delete Template
+            </button>
+        </div>
+    </div>
+    <div class="">
+        <div class="nestedDemo">
+            <div class="activate-box-components">
+                <div class="box-components">
+                    <div class="insert-box-components">
+                        <ul class="list-components">
+                            <li class="btn-new-widget" ng-click="addWidget()">
+                            </li>
+                            <li ng-repeat="item in models.templates"
+                                dnd-draggable="item"
+                                dnd-effect-allowed="copy"
+                                dnd-copied="item.id = item.id + 1" ng-class="'btn-' + item.title"
+                                disabled="disabled">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div gridster="gridsterOptions">
+                <ul>
+                    <li gridster-item="widget" ng-repeat="widget in dashboard.widgets" col="{{widget.col}}" id="{{widget.id}}">
+                        <div class="box-widget" ng-class="{'active': widget.zone.length}" ng-style="{'background-color': widget.color}" >
+                            <div class="box-header">
+                                <h3>{{ widget.zone[0].title}}</h3>
+                                <div class="box-header-btns pull-right color-widget" color-widget>
+                                    <a title="Select background color" ng-click="selectColor()">
+                                        <i class="ic-paint-brush"></i>
+                                    </a>
+                                    <input type="color" ng-model="widget.color">
+                                </div>
+                                <div class="box-header-btns pull-right">
+                                    <a title="Remove widget" ng-click="remove(widget)" remove-widget><i class="fa fa-trash"></i></a>
+                                </div>
+                            </div>
+                            <div class="box-content">
+                                <div class="dropzone">
+                                    <div ng-include="mainComponent" ng-init="list=widget.zone"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

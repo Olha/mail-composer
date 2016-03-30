@@ -1,0 +1,11 @@
+<div class="item">
+    <ul class="list_social">
+        <li ng-repeat="(social, socialUrl) in item.socialData" social-widget-item="{{social}}"
+            class="list_social-li {{social}}">
+            <span class="box-social"><i class="fa fa-{{social}}"></i></span>
+            <input type="url" ng-required class="social_url" ng-model="socialUrl" ng-class="{'ng-invalid-social': socialError}"
+                   ng-change="setSocialUrl(item.socialData, social, socialUrl)"
+                   placeholder="{{socialPlaceholder}}">
+        </li>
+    </ul>
+</div>

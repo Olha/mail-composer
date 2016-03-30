@@ -1,0 +1,26 @@
+<div class="item" ng-controller="AviaryImageController as dndImage">
+    <div aviary-image class="aviary-blk" ng-init="item.imageId = 'ai-'+dndImage.id">
+        <input type="file">
+        <span class="wrapper-image" ng-click="chooseImageHndl()"
+              ng-style="{'width': 208*widget.sizeX - 2 + 11*(widget.sizeX-1),
+              'max-width': '100%', 'height': 150*widget.sizeY - 2 + 50*(widget.sizeY-1), 'max-height': 252*3 }">
+            <img ng-src="{{item.boxSrc}}" alt="" id="ai-{{dndImage.id}}">
+        </span>
+
+        <span class="wrapper-image-additional" ng-hide="item.boxSrc === '/img/layout/dnd/add_photo.png'">
+            <span ng-click="chooseImageHndl()" class="edit-image-source">
+                <img src="/img/layout/dnd/edit_image.svg" alt="">
+            </span>
+            <span ng-click="showImageInput = !showImageInput" class="add-image-link">
+                <img src="/img/layout/dnd/add_link.svg" alt="">
+            </span>
+            <span class="image-link">
+                <input type="url" ng-show="showImageInput" ng-model="item.boxUrl" autofocus placeholder="{{ 'enter_image_link' | translate}}">
+            </span>
+        </span>
+        <span target-selector="#ai-{{dndImage.id}}"
+              on-save-button-clicked='dndImage.onSaveButtonClicked(id)'
+              on-save='dndImage.onSave(id, newURL, "dnd", dashboard.widgets)' ng-aviary>
+        </span>
+    </div>
+</div>

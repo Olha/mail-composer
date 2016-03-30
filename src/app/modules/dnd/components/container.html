@@ -1,0 +1,8 @@
+<div class="container-element box box-blue" dnd-container>
+    <div ng-class="{'active': list.length}"
+         class="{{'column-' + item.columns.length}}"
+         ng-repeat="list in item.columns"
+         ng-include="getContainerLink(widget, list)">
+    </div>
+    <div class="clearfix"></div>
+</div>
